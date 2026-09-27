@@ -1,11 +1,12 @@
-from src.main_2 import retrieval_part1, retrival_part2
-from tst.retrieval_eval_2 import recall_k
+from src.main import embed_documents_pipeline, ask_vector_store_pipeline
+from tst.retrieval_eval_metrics import recall_k
 import os
 import json
 
 
 def main(n_results, max_test):
-    embedded_chunks = retrieval_part1()
+    # Embed database
+    embedded_chunks = embed_documents_pipeline()
     
     average_recall = 0
     recall_sum = 0
@@ -16,7 +17,7 @@ def main(n_results, max_test):
             question = querry_snippet["query"]
             
             # Compute results for retrival
-            question, results = retrival_part2(question, embedded_chunks, n_results)
+            question, results = ask_vector_store_pipeline(question, embedded_chunks, n_results)
 
             snippets = querry_snippet["snippets"] # List of dictionnaries 
 

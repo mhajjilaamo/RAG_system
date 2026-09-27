@@ -1,8 +1,8 @@
-from src.data_ingesting_2 import import_data_legalBench_RAG_corpus
-from src.chunking_2 import Chunk, fixed_size_chunker
+from src.data_ingesting import import_data_legalBench_RAG_corpus
+from src.chunking import Chunk, fixed_size_chunker
 from sentence_transformers import SentenceTransformer
 from src.embedding import embed_text
-from src.retrival import retrieve_answer
+from src.retrieval import retrieve_answer
 from src.embedding import embedded_chunk
 
 
@@ -14,9 +14,10 @@ def print_pretty_results(question, results):
     #print("Listed answer in the document :", answer, "\n")
     for i in range(len(results)):
         print("Top answer n", i, " :", results[i], "\n")
+        
 
-
-def retrieval_part1():
+# This pipeline loads the documents, chunks it and embeds it and sends back an array of embedded chunks
+def embed_documents_pipeline():
     
     # Load corpus
     df = import_data_legalBench_RAG_corpus("contractnli")
@@ -39,12 +40,10 @@ def retrieval_part1():
 
     return embedded_chunks
 
-def retrival_part2(question, embedded_chunks, n_results=3):
 
-    # Load question
-    #(question, answer) = load_question(question_index)
-    #print("question :", question)
-    #print("answer:", answer)
+
+# This pipeline takes the user's question -> embeds it -> queries the vectore store -> question + results
+def ask_vector_store_pipeline(question, embedded_chunks, n_results=3):
 
     # Embed question
     embedded_question = embed_text(question, model)
@@ -68,4 +67,4 @@ def retrival_part2(question, embedded_chunks, n_results=3):
 
 
 
-#retrieval(1)
+

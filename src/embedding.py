@@ -1,14 +1,8 @@
 """
-This document immplements the complete embedding pipeline 
-
-Tokens -> Embeddings -> Search
-
-using embedding models :
-
-<Insert model>
+This document immplements the embedding data class and the embedding function using the "encode" method
 """
 from dataclasses import dataclass
-from src.chunking_2 import Chunk
+from src.chunking import Chunk
 from typing import List
 
 
