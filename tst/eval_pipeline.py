@@ -22,7 +22,7 @@ def main(n_results, max_test):
             snippets = querry_snippet["snippets"] # List of dictionnaries 
 
             # Compute recall@k for retrival operation
-            recall = recall_k(n_results, results, snippets)
+            recall = recall_k(results, snippets)
 
             print("question : ", question)
             print("expected answer : ")
@@ -34,6 +34,7 @@ def main(n_results, max_test):
                 print(chunk.text)
 
             print("recall : ", recall)
+            print("\n")
 
             recall_sum = recall + recall_sum
 
@@ -42,6 +43,7 @@ def main(n_results, max_test):
                 break
 
     average_recall = recall_sum / max_test
+    print("average recall :", average_recall)
     return average_recall
 
-main(3,2)
+main(3,20)

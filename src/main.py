@@ -59,8 +59,8 @@ def ask_vector_store_pipeline(question, embedded_chunks, n_results=3):
     results = []
     for index in result_embedded_indexes:
         results.append(embedded_chunks[index].chunk)
-    print("results are back to text")
-    print_pretty_results(question, results)
+    
+    #print_pretty_results(question, results)
 
 
     return (question, results)

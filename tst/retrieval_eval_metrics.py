@@ -4,26 +4,23 @@ recall@K and Mean Reciprocal Rank (MRR)
 """
 
 
-def recall_k(k, results, snippets):
-    if len(results)<k:
-        print("recall@k not computable : k =", k, "is superior to number of results returned = ", len(results))
-        return -1
-    
-    # Compare spans and source files of results and snippets
-    # Snippers is an array of multiple passages
-    # We need to check wether all of the snippets are included in at least on of the results
+def recall_k(results, snippets):
+    total_gold = 0
+    total_covered = 0
     for snippet in snippets:
-        covered = False
+        gold = set(range(snippet['span'][0], snippet['span'][1]))
+        total_gold += len(gold)
+
+        # union of characters covered by chunks IN THIS SNIPPET'S FILE
+        retrieved = set()
         for chunk in results:
-            if snippet['file_path'] == chunk.source_url:
-                chunk_end = chunk.start_index + chunk.length
-                if chunk.start_index <= snippet['span'][0] and chunk_end >= snippet['span'][1]:
-                    covered = True
-                    break
-        if not covered:
-            return 0   # a snippet nobody covered → whole question misses
-    return 1           # every snippet was covered
-    
+            if chunk.source_url == snippet['file_path']:
+                start = chunk.start_index
+                end = start + chunk.length
+                retrieved |= set(range(start, end))   # union — dedupes automatically
+
+        total_covered += len(gold & retrieved)          # intersection = covered gold chars
+    return total_covered / total_gold if total_gold else 0
 
 
 
