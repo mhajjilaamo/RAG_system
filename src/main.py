@@ -17,10 +17,10 @@ def print_pretty_results(question, results):
         
 
 # This pipeline loads the documents, chunks it and embeds it and sends back an array of embedded chunks
-def embed_documents_pipeline():
+def embed_documents_pipeline(corpus):
     
     # Load corpus
-    df = import_data_legalBench_RAG_corpus("contractnli")
+    df = import_data_legalBench_RAG_corpus(corpus)
     print("loaded documents")
 
     # Chunk articles

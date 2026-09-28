@@ -7,7 +7,7 @@ from dataclasses import asdict
 
 
 
-def main(n_results, max_test):
+def main(corpus, n_results, max_test):
     # Create results file
     timestamp = datetime.now(timezone.utc).isoformat()
     print("timestamp : ", timestamp)
@@ -15,7 +15,7 @@ def main(n_results, max_test):
 
     run = {'timestamp' : timestamp, 
            'dataset' : "LEGAL BENCH RAG",
-           'corpus' : "contractnli",
+           'corpus' : corpus,
            'num questions' : max_test,
            'chunk strategy' : "naive chunk",
            'chunk size' : 500,
@@ -28,7 +28,7 @@ def main(n_results, max_test):
                "per_question" : []}
 
     # Embed database
-    embedded_chunks = embed_documents_pipeline()
+    embedded_chunks = embed_documents_pipeline(corpus)
     
     average_recall = 0
     average_precision = 0
@@ -37,7 +37,8 @@ def main(n_results, max_test):
     recall_sum = 0
     precision_sum = 0
     reciprocal_rank_sum = 0
-    with open("data/legalBench-RAG/benchmarks/contractnli.json", "r", encoding="utf-8") as f:
+    corpus_benchmark_path = "data/legalBench-RAG/benchmarks/" + corpus + ".json"
+    with open(corpus_benchmark_path, "r", encoding="utf-8") as f:
         file = json.load(f)
         i = 0
         for querry_snippet in file["tests"]:
@@ -105,7 +106,7 @@ def main(n_results, max_test):
     eval_results['aggregates'] = aggregates
     
     # json dump data to file
-    file_name = "run" + str(timestamp) + ".json"
+    file_name = "run_" + corpus + "_" + str(timestamp) + ".json"
     path = "./results/" + file_name 
     with open(path, "w") as file:
         file.write(json.dumps(eval_results, indent=4))
@@ -114,4 +115,4 @@ def main(n_results, max_test):
 
     return average_recall
 
-main(3,3)
+main("privacy_qa",3,3)
