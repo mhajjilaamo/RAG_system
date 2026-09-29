@@ -22,7 +22,7 @@ def main(corpus, n_results, max_test):
            'chunk overlap' : 0,
            'embedding model' : "sentence-transformers/all-MiniLM-L6-v2",
            'k': n_results}
-    
+     
     eval_results = {"run" : run,
                "aggregates" : {},
                "per_question" : []}
@@ -37,7 +37,7 @@ def main(corpus, n_results, max_test):
     recall_sum = 0
     precision_sum = 0
     reciprocal_rank_sum = 0
-    corpus_benchmark_path = "data/legalBench-RAG/benchmarks/" + corpus + ".json"
+    corpus_benchmark_path = "data/legalBench-RAG/benchmarks/" + corpus + "_mini.json"
     with open(corpus_benchmark_path, "r", encoding="utf-8") as f:
         file = json.load(f)
         i = 0
@@ -116,3 +116,7 @@ def main(corpus, n_results, max_test):
     return average_recall
 
 main("privacy_qa",3,3)
+print("privacy qa done")
+
+#main("contractnli",3, 194)
+#print("contract_nli done")

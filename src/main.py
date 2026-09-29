@@ -23,8 +23,15 @@ def embed_documents_pipeline(corpus):
     df = import_data_legalBench_RAG_corpus(corpus)
     print("loaded documents")
 
-    # Chunk articles
-    chunks = fixed_size_chunker(data=df)
+    # Iterate over articles
+    chunks = []
+    for file in df:
+        path = file.path_to_corpus + file.file
+        with open(path, "r", encoding="utf-8") as f:
+            article = f.read()
+            # Chunk article
+            chunks_article = fixed_size_chunker(article=article, source_path=file.file)
+            chunks.extend(chunks_article)
     print("chunks done")
 
     chunks_text = [chunk.text for chunk in chunks]
@@ -34,9 +41,7 @@ def embed_documents_pipeline(corpus):
     print("embedding chunks done")
 
     # Embedding dataclass
-    embedded_chunks = []
-    for i in range(len(chunks)):
-        embedded_chunks.append(embedded_chunk(chunks[i], embedded_text[i]))
+    embedded_chunks = [embedded_chunk(c, e) for c, e in zip(chunks, embedded_text)]
 
     return embedded_chunks
 
