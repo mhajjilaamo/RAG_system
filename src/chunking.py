@@ -35,58 +35,64 @@ def fixed_size_chunker(article, source_path, chunk_size = 500):
 
     return chunks 
 
-def recursive_chunker(article, source_path, current_seperator_index, chunks_accumulator, article_start_index, max_chunk_size=500, seperators=["\n\n", "\n", ".", " ", ""]):
-    chunk = Chunk(start_index= article_start_index, source_url=source_path)
-    # base case : is  Text <= max_chunk_size
-    if len(article) <= max_chunk_size:
-        print("step 1")
-        chunk.text = article
-        chunk.length = len(chunk.text)
-        return chunks_accumulator.append(article)
-    
-    # split the text by the current_seperator_index seperator
-    # iterate over characters
-    j=0
-    article_index = article_start_index
-    while j<min(len(article), max_chunk_size):
-        print(article[j] == seperators[current_seperator_index])
-        # if we reach seperator
-        if article[j] == seperators[current_seperator_index]:
-            print("step 3")
-            chunk.text = article[article_start_index:j+article_start_index]
-            chunk.length = len(chunk.text)
-            chunks_accumulator.append(chunk)
-            return recursive_chunker(article, source_path, current_seperator_index+1, chunks_accumulator,j)
-        j = j + 1
-    # we reached max_size before reaching a separator
-    chunk.text = article[article_start_index:j+article_start_index]
-    chunk.length = len(chunk.text)
-    chunks_accumulator.append(chunk)
-    return recursive_chunker(article, source_path, 0, chunks_accumulator, j )
 
+def recursive_split(text, start_index, separators, max_chunk_size):
+    """Flat list of (piece_text, abs_start_index), each <= max_chunk_size where possible.
+    start_index is where `text` begins in the original article."""
+    if len(text) <= max_chunk_size:
+        return [(text, start_index)]          # already fits — atomic piece
 
-def recursive_chunker(article,article_start_index, source_path, current_seperator_index, max_chunk_size=500, separators=["\n\n", "\n", ".", " ", ""]):
-    if len(article) <= max_chunk_size:
-        chunk = Chunk(start_index=article_start_index, source_url=source_path)
-        chunk.text = article
-        chunk.length = len(article)
-        return [chunk]                      # a list, not a bare Chunk
+    if not separators:                        # ran out of separators: hard-cut by size
+        return [(text[i:i+max_chunk_size], start_index + i)
+                for i in range(0, len(text), max_chunk_size)]
+
+    sep = separators[0]
+    parts = list(text) if sep == "" else text.split(sep)   # "" => split into characters
+
+    pieces = []
+    offset = 0
+    for part in parts:
+        pieces.extend(recursive_split(part, start_index + offset, separators[1:], max_chunk_size))
+        offset += len(part) + len(sep)        # advance past the piece AND its separator
+    return pieces
+
+def merge_pieces(pieces, article, source_path, max_chunk_size):
+    """Greedily pack adjacent pieces into chunks <= max_chunk_size."""
+    def make_chunk(start, end):
+        c = Chunk(start_index=start, source_url=source_path)
+        c.text = article[start:end]           # slice from original => text matches start_index
+        c.length = len(c.text)
+        return c
+
+    if not pieces:
+        return []
 
     chunks = []
-    offset = 0
-    sep = separators[current_seperator_index]
-    for split in article.split(sep):
-        chunks.extend(recursive_chunker(split, article_start_index + offset, source_path,
-                                    current_seperator_index + 1, max_chunk_size, separators))
-        offset += len(split) + len(sep)
+    buffer_start = pieces[0][1]
+    buffer_end   = pieces[0][1] + len(pieces[0][0])
+
+    for text, start in pieces[1:]:
+        piece_end = start + len(text)
+        if piece_end - buffer_start > max_chunk_size:   # adding this piece would overflow
+            chunks.append(make_chunk(buffer_start, buffer_end))   # flush
+            buffer_start, buffer_end = start, piece_end           # start fresh
+        else:
+            buffer_end = piece_end                                # extend buffer
+    chunks.append(make_chunk(buffer_start, buffer_end))           # final flush
     return chunks
 
-with open("data/legalBench-RAG/corpus/privacy_qa/23andMe.txt", 'r', encoding='utf-8') as file:
-    article = file.read()
-    chunks = recursive_chunker(article, 0 ,"privacy_qa/23andMe.txt",0 )
-    #print(chunks)
-    for chunk in chunks:
-        print("text :", chunk.text)
-        print("length :", chunk.length)
-        print("start index :", chunk.start_index)
-        print("\n")
+
+def recursive_chunker(article, source_path, max_chunk_size=500,
+                      separators=["\n\n", "\n", ".", " ", ""]):
+    pieces = recursive_split(article, 0, separators, max_chunk_size)
+    return merge_pieces(pieces, article, source_path, max_chunk_size)
+
+# with open("data/legalBench-RAG/corpus/privacy_qa/23andMe.txt", 'r', encoding='utf-8') as file:
+#     article = file.read()
+#     chunks = recursive_chunker(article, "privacy_qa/23andMe.txt")
+#     #print(chunks)
+#     for chunk in chunks:
+#         print("text :", chunk.text)
+#         print("length :", chunk.length)
+#         print("start index :", chunk.start_index)
+#         print("\n")

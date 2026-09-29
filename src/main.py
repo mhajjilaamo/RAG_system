@@ -1,5 +1,5 @@
 from src.data_ingesting import import_data_legalBench_RAG_corpus
-from src.chunking import Chunk, fixed_size_chunker
+from src.chunking import Chunk, fixed_size_chunker, recursive_chunker
 from sentence_transformers import SentenceTransformer
 from src.embedding import embed_text
 from src.retrieval import retrieve_answer
@@ -30,7 +30,8 @@ def embed_documents_pipeline(corpus):
         with open(path, "r", encoding="utf-8") as f:
             article = f.read()
             # Chunk article
-            chunks_article = fixed_size_chunker(article=article, source_path=file.file)
+            #chunks_article = fixed_size_chunker(article=article, source_path=file.file)
+            chunks_article = recursive_chunker(article, file.file)
             chunks.extend(chunks_article)
     print("chunks done")
 

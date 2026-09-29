@@ -17,7 +17,7 @@ def main(corpus, n_results, max_test):
            'dataset' : "LEGAL BENCH RAG",
            'corpus' : corpus,
            'num questions' : max_test,
-           'chunk strategy' : "naive chunk",
+           'chunk strategy' : "recursive chunker",
            'chunk size' : 500,
            'chunk overlap' : 0,
            'embedding model' : "sentence-transformers/all-MiniLM-L6-v2",
@@ -115,7 +115,7 @@ def main(corpus, n_results, max_test):
 
     return average_recall
 
-main("privacy_qa",3,3)
+main("privacy_qa",3,194)
 print("privacy qa done")
 
 #main("contractnli",3, 194)
