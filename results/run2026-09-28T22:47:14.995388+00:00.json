@@ -1,0 +1,128 @@
+{
+    "run": {
+        "timestamp": "2026-09-28T22:47:14.995388+00:00",
+        "dataset": "LEGAL BENCH RAG",
+        "corpus": "contractnli",
+        "num questions": 3,
+        "chunk strategy": "naive chunk",
+        "chunk size": 500,
+        "chunk overlap": 0,
+        "embedding model": "sentence-transformers/all-MiniLM-L6-v2",
+        "k": 3
+    },
+    "aggregates": {
+        "mean recall": 0.0,
+        "mean precision": 0.0,
+        "mean reciprocal rank": 0.0
+    },
+    "per_question": [
+        {
+            "question": "Consider the Non-Disclosure Agreement between CopAcc and ToP Mentors; Does the document indicate that the Agreement does not grant the Receiving Party any rights to the Confidential Information?",
+            "gold snippets": [
+                {
+                    "file_path": "contractnli/CopAcc_NDA-and-ToP-Mentors_2.0_2017.txt",
+                    "span": [
+                        11461,
+                        11963
+                    ],
+                    "answer": "Any and all proprietary rights, including but not limited to rights to and in inventions, patent rights, utility models, copyrights, trademarks and trade secrets, in and to any Confidential Information shall be and remain with the Participants respectively, and Mentor shall not have any right, license, title or interest in or to any Confidential Information, except the limited right to review, assess and help develop such Confidential Information in connection with the Copernicus Accelerator 2017."
+                }
+            ],
+            "retrieved results": [
+                {
+                    "start_index": 9000,
+                    "source_url": "contractnli/CopAcc_NDA-and-ToP-Mentors_2.0_2017.txt",
+                    "length": 500,
+                    "text": "rmation to at least the same degree as this Agreement. Mentor shall take all reasonable measures to protect the secrecy of, and avoid any unauthorised disclosure or use of Confidential Information. Such measures shall include the highest degree of care that Mentor utilises to protect Mentor\u2019s own confidential information of a similar nature, but no less than reasonable care.\nNotwithstanding Mentor\u2019s right to assess and rate the Ideas of the Participants, Mentor shall not use the Confidential inf"
+                },
+                {
+                    "start_index": 4000,
+                    "source_url": "contractnli/QuickBooks-NDA-template.txt",
+                    "length": 500,
+                    "text": "ll this Agreement grant either party any rights in or to the other party\u02bcs Confidential Information, except the limited right to review such Confidential Information solely for the purposes of determining whether to enter into the proposed business relationship between the parties and in carrying out such relationship. The disclosing party warrants that it has the right to disclose its Confidential Information to the receiving party. Otherwise, all information is provided \u201cas is\u201d and without any"
+                },
+                {
+                    "start_index": 4500,
+                    "source_url": "contractnli/BT_NDA.txt",
+                    "length": 500,
+                    "text": "The Receiving Party recognises that this Agreement imposes an affirmative duty to hold such information in confidence and protect it from dissemination to and use by any unauthorised persons. In the absence of the Disclosing Party\u2019s prior written consent, the Receiving Party shall not produce nor disclose the Confidential Information, or any part thereof, to any third party.\n2.2 Disclosure of Confidential Information. The Confidential Information is proprietary information and for the exclusive "
+                }
+            ],
+            "recall": 0.0,
+            "precision": 0.0,
+            "reciprocal rank": 0
+        },
+        {
+            "question": "Consider the Non-Disclosure Agreement between CopAcc and ToP Mentors; Does the document state that Confidential Information shall only include technical information?",
+            "gold snippets": [
+                {
+                    "file_path": "contractnli/CopAcc_NDA-and-ToP-Mentors_2.0_2017.txt",
+                    "span": [
+                        7752,
+                        8016
+                    ],
+                    "answer": "\u201cConfidential Information\u201d means any Idea disclosed to Mentor, all data and information, know-how, business concepts, software, procedures, products, services, development projects, and programmes contained in such Idea and/or its description and any conclusions. "
+                }
+            ],
+            "retrieved results": [
+                {
+                    "start_index": 8500,
+                    "source_url": "contractnli/CopAcc_NDA-and-ToP-Mentors_2.0_2017.txt",
+                    "length": 500,
+                    "text": "formation / Obligations of Mentor\nMentor shall not use any Confidential Information for any purpose except to review, assess and help develop the Participants\u00b4 Ideas.\nMentor shall not disclose any Confidential Information to any third party or to Mentor\u2019s employees and/or employer without the prior written consent of the Participants. Mentor shall require his/her employees who will have access to Confidential Information to commit to a non-disclosure agreement that protects the Confidential Info"
+                },
+                {
+                    "start_index": 2500,
+                    "source_url": "contractnli/SE_NDCA_and_PRE-QUAL_PACKAGE_March-2016.txt",
+                    "length": 500,
+                    "text": "specifically designated as non-proprietary and non-confidential.\nConfidential Information shall not include: (a) information which is or becomes publicly available other than as a result of a violation of this Agreement; (b) information which is or becomes available on a non-confidential basis from a source which is not known to the Receiving Party to be prohibited from disclosing such information pursuant to a legal, contractual or fiduciary obligation to the Disclosing Party; (c) information w"
+                },
+                {
+                    "start_index": 1500,
+                    "source_url": "contractnli/UALR-Standard-Non-disclosure-AgreementTemplate.txt",
+                    "length": 500,
+                    "text": "documentation, code, structure, or protocols. Confidential Information that is disclosed verbally will also be included as proprietary.\n2. Unless expressly authorized in writing by the Disclosing Party, the Receiving Party agrees to retain the Confidential Information in confidence and shall not copy or disclose the Confidential Information to or use the Confidential Information for the benefit of any third party. Confidential Information shall only be disclosed to the Receiving Party\u2019s employee"
+                }
+            ],
+            "recall": 0.0,
+            "precision": 0.0,
+            "reciprocal rank": 0
+        },
+        {
+            "question": "Consider the Non-Disclosure Agreement between CopAcc and ToP Mentors; Does the document mention that some obligations of the Agreement may survive the termination of the Agreement?",
+            "gold snippets": [
+                {
+                    "file_path": "contractnli/CopAcc_NDA-and-ToP-Mentors_2.0_2017.txt",
+                    "span": [
+                        12076,
+                        12328
+                    ],
+                    "answer": "Notwithstanding the termination of this Agreement, any Confidential Information must be kept confidential for as long as such Confidential Information is not publicly known unless it becomes part of the public domain through no wrongful act of Mentor. "
+                }
+            ],
+            "retrieved results": [
+                {
+                    "start_index": 2500,
+                    "source_url": "contractnli/DoiT-ICN-NonDisclosure-Agreement.txt",
+                    "length": 500,
+                    "text": "\u00a0this\u00a0Agreement\u00a0with\u00a0respect\u00a0to\u00a0the\u00a0disclosure\u00a0and\u00a0use\u00a0of\u00a0CONFIDENTIAL\u00a0INFORMATION\u00a0shall survive\u00a0for\u00a0a\u00a0period\u00a0of\u00a0three\u00a0(3)\u00a0years\u00a0from\u00a0the\u00a0date\u00a0of\u00a0last\u00a0disclosure.\n6. The\u00a0parties\u00a0recognize\u00a0and\u00a0agree\u00a0that\u00a0the\u00a0obligations\u00a0under\u00a0paragraphs\u00a01\u00a0and\u00a06\u00a0of\u00a0this\u00a0Agreement\u00a0shall\u00a0survive\u00a0the termination\u00a0of\u00a0this\u00a0Agreement,\u00a0and\u00a0the\u00a0parties\u00a0shall\u00a0be\u00a0bound\u00a0by\u00a0such\u00a0obligations\u00a0after\u00a0termination\u00a0hereof.\n7. This\u00a0Agreement\u00a0constitutes\u00a0the\u00a0entire\u00a0understanding\u00a0between\u00a0the\u00a0parties\u00a0hereto\u00a0as\u00a0to\u00a0the\u00a0CONFIDENTIAL INFORMA"
+                },
+                {
+                    "start_index": 9000,
+                    "source_url": "contractnli/NCDG_Non-disclosure-agreement.txt",
+                    "length": 500,
+                    "text": "no longer holds any further Confidential Information.\nVI. Non-Disclosure of Negotiations:\nExcept as provided in Clause 4, each Party agrees that it will not, without the other Party\u2019s prior written approval, disclose to any third party the fact that the Parties are discussing the Project. The Parties acknowledge that the provisions of this Agreement shall apply in respect of the content of any such discussions. The undertaking set forth in this Clause 7 shall survive the termination of this Agre"
+                },
+                {
+                    "start_index": 14500,
+                    "source_url": "contractnli/JB-Machine-LLC-NDA-1.txt",
+                    "length": 500,
+                    "text": "of the Owner of confidential information, aside from the \u201cRelevant Term\u201d subsection, which is to survive voiding of any rights or termination of this Agreement. This Agreement may be terminated by means of written notice of the Owner or by end of the contractual relationship to which this Non-disclosure agreement undoubtedly ties to the execution of a contract related to this Non-disclosure agreement\nAll unilateral modifications of the terms of this Agreement are invalid, except for the written "
+                }
+            ],
+            "recall": 0.0,
+            "precision": 0.0,
+            "reciprocal rank": 0
+        }
+    ]
+}

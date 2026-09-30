@@ -7,7 +7,8 @@ from src.embedding import embedded_chunk
 
 
 
-model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+#model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+model = SentenceTransformer("BAAI/bge-small-en-v1.5")
 
 def print_pretty_results(question, results):
     print("Question :", question, "\n")
@@ -52,7 +53,8 @@ def embed_documents_pipeline(corpus):
 def ask_vector_store_pipeline(question, embedded_chunks, n_results=3):
 
     # Embed question
-    embedded_question = embed_text(question, model)
+    q = "Represent this sentence for searching relevant passages: " + question
+    embedded_question = embed_text(q, model)
     print("embedding question done")
 
     embedded_text = [embedded_chunk.embedding for embedded_chunk in embedded_chunks] 

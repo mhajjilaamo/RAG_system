@@ -1,0 +1,144 @@
+{
+    "run": {
+        "timestamp": "2026-09-29T00:15:31.444263+00:00",
+        "dataset": "LEGAL BENCH RAG",
+        "corpus": "privacy_qa",
+        "num questions": 3,
+        "chunk strategy": "naive chunk",
+        "chunk size": 500,
+        "chunk overlap": 0,
+        "embedding model": "sentence-transformers/all-MiniLM-L6-v2",
+        "k": 3
+    },
+    "aggregates": {
+        "mean recall": 0.0,
+        "mean precision": 0.0,
+        "mean reciprocal rank": 0.0
+    },
+    "per_question": [
+        {
+            "question": "Consider \"Viber Messenger\"'s privacy policy; does viber have any affiliation with the advertisement industry?",
+            "gold snippets": [
+                {
+                    "file_path": "privacy_qa/Viber Messenger.txt",
+                    "span": [
+                        13453,
+                        14416
+                    ],
+                    "answer": "(b) App Providers and Other Third-Parties:We may disclose your information to service providers and other third-parties under contract who help with providing you and others our Services on our behalf or other services provided by third-parties via our Services (such as, but not limited to, fraud and spam investigations, payment processing, site analytics and operations, providing special partnership features in our service either on an aggregate non identifiable basis, or using a unique identifier which is not attributable to you).\nThey are required to secure the data they receive.\n(c) Advertising partners: to enable the limited advertisements on our service, we may share a unique advertising identifier that is not attributable to you, with our third party advertising partners, and advertising service providers, along with certain technical data about you (your language preference, country, city, and device data), based on our legitimate interest.\n"
+                }
+            ],
+            "retrieved results": [
+                {
+                    "start_index": 27000,
+                    "source_url": "privacy_qa/Viber Messenger.txt",
+                    "length": 500,
+                    "text": "cy, please feel free to send us an email toprivacy@viber.com,or using the contact us form on the App.\nYou can also contact us in writing at Viber Media S. r.l., Attention: Data Privacy Officer, 2, rue du Foss, L- 1536 Luxembourg, Grand Duchy of Luxembourg.\nIn the event you read this Privacy Policy in any language other than English, you agree that in the event of any discrepancies, the English version shall prevail.\nCurrent Privacy policy PDF Version Viber Privacy Policy May 2018\nPrevious Policy"
+                },
+                {
+                    "start_index": 22500,
+                    "source_url": "privacy_qa/Viber Messenger.txt",
+                    "length": 500,
+                    "text": "y or to the data protection authority of Luxembourg using their online form.\nViber Land Privacy Rights\nIf you made Viber your daily choice for connecting and sharing, make sure to be sending good vibes and make your friends smile.\nEventually, this is what Viber is for.\nOur appmay contain links to other third-party websites or you may access Apps from a third- party site.\nWe are not responsible for the privacy practices or the content of these third-party sites.\nWestern Union Partnership: You may"
+                },
+                {
+                    "start_index": 16500,
+                    "source_url": "privacy_qa/Viber Messenger.txt",
+                    "length": 500,
+                    "text": "y also further use such public information you share, for various reasons, such as improving our service and providing you with relevant content, and analyzing trends.\nYou can control what data you share through privacy settings available on some social media sites.\nPlease refer to those third-party sites privacy policies and terms of use to learn more about their privacy practices, as we do not control these.\nAt this stage, whatever you share publicly is available to the entire Viber community."
+                }
+            ],
+            "recall": 0.0,
+            "precision": 0.0,
+            "reciprocal rank": 0
+        },
+        {
+            "question": "Consider \"Keep\"'s privacy policy; who can see my data?",
+            "gold snippets": [
+                {
+                    "file_path": "privacy_qa/Keep.txt",
+                    "span": [
+                        4004,
+                        4242
+                    ],
+                    "answer": "Where we or our affiliate companies process your payments as a payment service provider, or where we fulfill any purchases you have made on Keep, we may collect, use and store your Personal Information in order to fulfill such purchases.\n"
+                },
+                {
+                    "file_path": "privacy_qa/Keep.txt",
+                    "span": [
+                        4956,
+                        5177
+                    ],
+                    "answer": "In order to participate in certain features, you may have to adjust your Privacy settings and share more information.\nYou may also choose to share your activity on other platforms, such as Facebook, Twitter or Instagram.\n"
+                }
+            ],
+            "retrieved results": [
+                {
+                    "start_index": 7000,
+                    "source_url": "privacy_qa/Keep.txt",
+                    "length": 500,
+                    "text": "ferent Privacy Policy in advance.\nWhen you join or use certain services, you agree to publicly share a basic amount of information, which may include your username, city location, and profile picture.\nWhen using our products and services, you can always manage, review and update information in your account, for instance, you can manage your personal information at any time, such as your Keep ID and photo.\nIn the meanwhile, you are responsible for the truthfulness, legality, validity and complete"
+                },
+                {
+                    "start_index": 24000,
+                    "source_url": "privacy_qa/Wordscapes.txt",
+                    "length": 500,
+                    "text": "antee that unauthorized access, hacking, data loss, or other breaches will never occur.\nAlthough we strive to protect your personal data, we cannot guarantee the security of your data while it is being transmitted through our Services; any transmission is at your own risk.\nOnce we have received your information, we have procedures and security features in place to try to prevent unauthorized access.\nAny information that is collected via our Services is covered by the Privacy Policy in effect at "
+                },
+                {
+                    "start_index": 11500,
+                    "source_url": "privacy_qa/Viber Messenger.txt",
+                    "length": 500,
+                    "text": "account, we will minimize the personal data we keep about you only to such data which we are required to keep to comply with laws, or other legal reasons.\nWe may keep activity data on a non-identifiable basis to improve our services.\nYour posts on public accounts and communities may remain available if you do not delete them.\nYour data is kept safe with us, but we do share your personal information with third parties we trust in order to provide you with our services, as follows:\n(a)The Viber Co"
+                }
+            ],
+            "recall": 0.0,
+            "precision": 0.0,
+            "reciprocal rank": 0
+        },
+        {
+            "question": "Consider \"Fiverr\"'s privacy policy; what information can other people see?",
+            "gold snippets": [
+                {
+                    "file_path": "privacy_qa/Fiverr.txt",
+                    "span": [
+                        528,
+                        847
+                    ],
+                    "answer": "  We collect information that you provide us or voluntarily share with other users, and also some general technical information that is automatically gathered by our systems, such as IP address, browser information and cookies to enable you to have a better user experience and a more personalized browsing experience.\n"
+                },
+                {
+                    "file_path": "privacy_qa/Fiverr.txt",
+                    "span": [
+                        4943,
+                        5248
+                    ],
+                    "answer": "  Once you register, your username and additional information regarding your activity is made public and is visible to all Users of the Site.\nThis information includes photos you upload, your published portfolio, Gig information, ratings, and additional information you may choose to add to your profile.\n"
+                }
+            ],
+            "retrieved results": [
+                {
+                    "start_index": 2500,
+                    "source_url": "privacy_qa/Fiverr.txt",
+                    "length": 500,
+                    "text": "at it) and more in the long version of our Policy below.\n  Fiverr (including Fiverr Inc., Fiver International Ltd. and its affiliates) respects your privacy and is committed to protect the personal information of its users - buyers, sellers, and visitors browsing the Site (Users).\nWe believe that you have a right to know our practices regarding the information we may collect when you visit and/or use the Site.\nThis Policy explains our privacy practices for the Site and services provided by Fiver"
+                },
+                {
+                    "start_index": 0,
+                    "source_url": "privacy_qa/Fiverr.txt",
+                    "length": 500,
+                    "text": "  At Fiverr we care about your privacy.\nWe do not sell or rent your personal information to third parties for their direct marketing purposes without your explicit consent.\nWe do not disclose it to others except as disclosed in this Policy or required to provide you with the services of the Site and mobile applications, meaning - to allow you to buy, sell, share the information you want to share on the Site; to contribute on the forum; pay for products; post reviews and so on; or where we have a"
+                },
+                {
+                    "start_index": 3000,
+                    "source_url": "privacy_qa/Fiverr.txt",
+                    "length": 500,
+                    "text": "r.\nBy accessing and/or using the Site and its related sites, applications, services, goods and/or registering for a Fiverr account, you agree to the terms and conditions of this Policy, including to our collection, use, disclosure, processing and retention of your personal information.\nYou can also learn how to limit sharing of information in this Policy.\n  When you register to the Site we ask you to provide certain personal information, including a valid email address, location, facebook or goo"
+                }
+            ],
+            "recall": 0.0,
+            "precision": 0.0,
+            "reciprocal rank": 0
+        }
+    ]
+}

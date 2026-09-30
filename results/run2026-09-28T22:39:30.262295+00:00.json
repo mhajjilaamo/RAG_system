@@ -1,0 +1,11 @@
+{
+    "timestamp": "2026-09-28T22:39:30.262295+00:00",
+    "dataset": "LEGAL BENCH RAG",
+    "corpus": "contractnli",
+    "num questions": 3,
+    "chunk strategy": "naive chunk",
+    "chunk size": 500,
+    "chunk overlap": 0,
+    "embedding model": "sentence-transformers/all-MiniLM-L6-v2",
+    "k": 3
+}

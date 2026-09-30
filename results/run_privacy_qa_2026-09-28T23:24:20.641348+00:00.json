@@ -1,0 +1,136 @@
+{
+    "run": {
+        "timestamp": "2026-09-28T23:24:20.641348+00:00",
+        "dataset": "LEGAL BENCH RAG",
+        "corpus": "privacy_qa",
+        "num questions": 3,
+        "chunk strategy": "naive chunk",
+        "chunk size": 500,
+        "chunk overlap": 0,
+        "embedding model": "sentence-transformers/all-MiniLM-L6-v2",
+        "k": 3
+    },
+    "aggregates": {
+        "mean recall": 0.0,
+        "mean precision": 0.0,
+        "mean reciprocal rank": 0.0
+    },
+    "per_question": [
+        {
+            "question": "Consider \"Fiverr\"'s privacy policy; who can see which tasks i hire workers for?",
+            "gold snippets": [
+                {
+                    "file_path": "privacy_qa/Fiverr.txt",
+                    "span": [
+                        3873,
+                        4312
+                    ],
+                    "answer": "  In addition, we collect information while you access, browse, view or otherwise use the Site.\nIn other words, when you access the Site we are aware of your usage of the Site, and may gather, collect and record the information relating to such usage, including geo-location information, IP address, device and connection information, browser information and web-log information, and all communications recorded by Users through the Site.\n"
+                }
+            ],
+            "retrieved results": [
+                {
+                    "start_index": 2500,
+                    "source_url": "privacy_qa/Fiverr.txt",
+                    "length": 500,
+                    "text": "at it) and more in the long version of our Policy below.\n  Fiverr (including Fiverr Inc., Fiver International Ltd. and its affiliates) respects your privacy and is committed to protect the personal information of its users - buyers, sellers, and visitors browsing the Site (Users).\nWe believe that you have a right to know our practices regarding the information we may collect when you visit and/or use the Site.\nThis Policy explains our privacy practices for the Site and services provided by Fiver"
+                },
+                {
+                    "start_index": 0,
+                    "source_url": "privacy_qa/Fiverr.txt",
+                    "length": 500,
+                    "text": "  At Fiverr we care about your privacy.\nWe do not sell or rent your personal information to third parties for their direct marketing purposes without your explicit consent.\nWe do not disclose it to others except as disclosed in this Policy or required to provide you with the services of the Site and mobile applications, meaning - to allow you to buy, sell, share the information you want to share on the Site; to contribute on the forum; pay for products; post reviews and so on; or where we have a"
+                },
+                {
+                    "start_index": 3000,
+                    "source_url": "privacy_qa/Fiverr.txt",
+                    "length": 500,
+                    "text": "r.\nBy accessing and/or using the Site and its related sites, applications, services, goods and/or registering for a Fiverr account, you agree to the terms and conditions of this Policy, including to our collection, use, disclosure, processing and retention of your personal information.\nYou can also learn how to limit sharing of information in this Policy.\n  When you register to the Site we ask you to provide certain personal information, including a valid email address, location, facebook or goo"
+                }
+            ],
+            "recall": 0.0,
+            "precision": 0.0,
+            "reciprocal rank": 0
+        },
+        {
+            "question": "Consider \"Fiverr\"'s privacy policy; who can see the jobs that i post?",
+            "gold snippets": [
+                {
+                    "file_path": "privacy_qa/Fiverr.txt",
+                    "span": [
+                        3969,
+                        4312
+                    ],
+                    "answer": "In other words, when you access the Site we are aware of your usage of the Site, and may gather, collect and record the information relating to such usage, including geo-location information, IP address, device and connection information, browser information and web-log information, and all communications recorded by Users through the Site.\n"
+                }
+            ],
+            "retrieved results": [
+                {
+                    "start_index": 2500,
+                    "source_url": "privacy_qa/Fiverr.txt",
+                    "length": 500,
+                    "text": "at it) and more in the long version of our Policy below.\n  Fiverr (including Fiverr Inc., Fiver International Ltd. and its affiliates) respects your privacy and is committed to protect the personal information of its users - buyers, sellers, and visitors browsing the Site (Users).\nWe believe that you have a right to know our practices regarding the information we may collect when you visit and/or use the Site.\nThis Policy explains our privacy practices for the Site and services provided by Fiver"
+                },
+                {
+                    "start_index": 0,
+                    "source_url": "privacy_qa/Fiverr.txt",
+                    "length": 500,
+                    "text": "  At Fiverr we care about your privacy.\nWe do not sell or rent your personal information to third parties for their direct marketing purposes without your explicit consent.\nWe do not disclose it to others except as disclosed in this Policy or required to provide you with the services of the Site and mobile applications, meaning - to allow you to buy, sell, share the information you want to share on the Site; to contribute on the forum; pay for products; post reviews and so on; or where we have a"
+                },
+                {
+                    "start_index": 3000,
+                    "source_url": "privacy_qa/Fiverr.txt",
+                    "length": 500,
+                    "text": "r.\nBy accessing and/or using the Site and its related sites, applications, services, goods and/or registering for a Fiverr account, you agree to the terms and conditions of this Policy, including to our collection, use, disclosure, processing and retention of your personal information.\nYou can also learn how to limit sharing of information in this Policy.\n  When you register to the Site we ask you to provide certain personal information, including a valid email address, location, facebook or goo"
+                }
+            ],
+            "recall": 0.0,
+            "precision": 0.0,
+            "reciprocal rank": 0
+        },
+        {
+            "question": "Consider \"Fiverr\"'s privacy policy; what type of identifiable information is passed between users on the platform",
+            "gold snippets": [
+                {
+                    "file_path": "privacy_qa/Fiverr.txt",
+                    "span": [
+                        528,
+                        847
+                    ],
+                    "answer": "  We collect information that you provide us or voluntarily share with other users, and also some general technical information that is automatically gathered by our systems, such as IP address, browser information and cookies to enable you to have a better user experience and a more personalized browsing experience.\n"
+                },
+                {
+                    "file_path": "privacy_qa/Fiverr.txt",
+                    "span": [
+                        4943,
+                        5248
+                    ],
+                    "answer": "  Once you register, your username and additional information regarding your activity is made public and is visible to all Users of the Site.\nThis information includes photos you upload, your published portfolio, Gig information, ratings, and additional information you may choose to add to your profile.\n"
+                }
+            ],
+            "retrieved results": [
+                {
+                    "start_index": 2500,
+                    "source_url": "privacy_qa/Fiverr.txt",
+                    "length": 500,
+                    "text": "at it) and more in the long version of our Policy below.\n  Fiverr (including Fiverr Inc., Fiver International Ltd. and its affiliates) respects your privacy and is committed to protect the personal information of its users - buyers, sellers, and visitors browsing the Site (Users).\nWe believe that you have a right to know our practices regarding the information we may collect when you visit and/or use the Site.\nThis Policy explains our privacy practices for the Site and services provided by Fiver"
+                },
+                {
+                    "start_index": 3000,
+                    "source_url": "privacy_qa/Fiverr.txt",
+                    "length": 500,
+                    "text": "r.\nBy accessing and/or using the Site and its related sites, applications, services, goods and/or registering for a Fiverr account, you agree to the terms and conditions of this Policy, including to our collection, use, disclosure, processing and retention of your personal information.\nYou can also learn how to limit sharing of information in this Policy.\n  When you register to the Site we ask you to provide certain personal information, including a valid email address, location, facebook or goo"
+                },
+                {
+                    "start_index": 0,
+                    "source_url": "privacy_qa/Fiverr.txt",
+                    "length": 500,
+                    "text": "  At Fiverr we care about your privacy.\nWe do not sell or rent your personal information to third parties for their direct marketing purposes without your explicit consent.\nWe do not disclose it to others except as disclosed in this Policy or required to provide you with the services of the Site and mobile applications, meaning - to allow you to buy, sell, share the information you want to share on the Site; to contribute on the forum; pay for products; post reviews and so on; or where we have a"
+                }
+            ],
+            "recall": 0.0,
+            "precision": 0.0,
+            "reciprocal rank": 0
+        }
+    ]
+}

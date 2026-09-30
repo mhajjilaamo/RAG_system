@@ -6,7 +6,6 @@ from datetime import datetime, timezone
 from dataclasses import asdict
 
 
-
 def main(corpus, n_results, max_test):
     # Create results file
     timestamp = datetime.now(timezone.utc).isoformat()
@@ -20,7 +19,7 @@ def main(corpus, n_results, max_test):
            'chunk strategy' : "recursive chunker",
            'chunk size' : 500,
            'chunk overlap' : 0,
-           'embedding model' : "sentence-transformers/all-MiniLM-L6-v2",
+           'embedding model' : "sentence-transformers/BAAI/bge-small-en-v1.5",
            'k': n_results}
      
     eval_results = {"run" : run,
@@ -37,7 +36,7 @@ def main(corpus, n_results, max_test):
     recall_sum = 0
     precision_sum = 0
     reciprocal_rank_sum = 0
-    corpus_benchmark_path = "data/legalBench-RAG/benchmarks/" + corpus + "_mini.json"
+    corpus_benchmark_path = "data/legalBench-RAG/benchmarks/" + corpus + "_mini.json" #mini
     with open(corpus_benchmark_path, "r", encoding="utf-8") as f:
         file = json.load(f)
         i = 0
@@ -115,8 +114,8 @@ def main(corpus, n_results, max_test):
 
     return average_recall
 
-main("privacy_qa",3,194)
-print("privacy qa done")
+#main("privacy_qa",3,194)
+#print("privacy qa done")
 
-#main("contractnli",3, 194)
-#print("contract_nli done")
+main("contractnli",3, 194)
+print("contract_nli done")
