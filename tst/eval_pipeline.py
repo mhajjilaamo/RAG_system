@@ -114,8 +114,8 @@ def main(corpus, n_results, max_test):
 
     return average_recall
 
-#main("privacy_qa",3,194)
-#print("privacy qa done")
+main("privacy_qa",30,194)
+print("privacy qa done")
 
-main("contractnli",3, 194)
-print("contract_nli done")
+#main("contractnli",3, 194)
+#print("contract_nli done")
