@@ -4,6 +4,7 @@ import os
 import json
 from datetime import datetime, timezone
 from dataclasses import asdict
+import time
 
 
 def main(corpus, n_results, max_test):
@@ -19,7 +20,7 @@ def main(corpus, n_results, max_test):
            'chunk strategy' : "recursive chunker",
            'chunk size' : 500,
            'chunk overlap' : 0,
-           'embedding model' : "sentence-transformers/BAAI/bge-small-en-v1.5",
+           'embedding model' : "gemini_embedding_2",
            'k': n_results}
      
     eval_results = {"run" : run,
@@ -27,7 +28,7 @@ def main(corpus, n_results, max_test):
                "per_question" : []}
 
     # Embed database
-    embedded_chunks = embed_documents_pipeline(corpus)
+    #embedded_chunks = embed_documents_pipeline(corpus)
     
     average_recall = 0
     average_precision = 0
@@ -44,7 +45,7 @@ def main(corpus, n_results, max_test):
             question = querry_snippet["query"]
             
             # Compute results for retrival (results is a list of chunks)
-            question, results = ask_vector_store_pipeline(question, embedded_chunks, n_results)
+            question, results = ask_vector_store_pipeline(question,"./index_20261003_003723/privacy_qa" , n_results)
 
             snippets = querry_snippet["snippets"] # List of dictionnaries 
 
@@ -85,6 +86,8 @@ def main(corpus, n_results, max_test):
 
 
             i = i + 1
+            if i%100 == 0 and i>0:
+                time.sleep(60)
             if i==max_test:
                 break
 
@@ -114,8 +117,21 @@ def main(corpus, n_results, max_test):
 
     return average_recall
 
-main("privacy_qa",30,194)
+main("privacy_qa",8,194)
 print("privacy qa done")
 
-#main("contractnli",3, 194)
+#./index_20261003_003723/privacy_qa
+
+#main("contractnli",8, 194)
 #print("contract_nli done")
+
+
+# Full end to end rag query pipeline --> DONE
+# Next step refactor eval pipeline to read from disk instead of re embed the corpus at every evaluation run  ---> DONE
+# Try google embedding model
+# Refactor code for google embedding model
+# Automatize embedding find somehow
+# Reranker ? ---> No
+# Change the chunker to Tokens
+# Streamlit/FastAPI interface
+# Swap index_Timestamp and corpus in path
