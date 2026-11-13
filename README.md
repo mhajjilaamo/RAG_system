@@ -1,37 +1,88 @@
-# LegalBench-RAG — From-Scratch RAG Pipeline
+# LegalBench-RAG — From-Scratch RAG
 
-**English** | [Français](README.fr.md)
+RAG pipeline for [LegalBench-RAG](https://arxiv.org/abs/2408.10343), built from primitives — no RAG framework, no vector DB.
 
-A retrieval-augmented generation pipeline for the [LegalBench-RAG](https://arxiv.org/abs/2408.10343) benchmark, built from primitives — no RAG framework, no hosted vector DB. Retrieval is the rigorously evaluated core; generation is a grounded demonstration layer on top.
+`ingest → chunk → embed → index → retrieve → generate → evaluate`
 
-## Overview
-- From-scratch RAG: ingest → chunk → embed → index → retrieve → generate
-- Runs fully local/free (CPU) **or** with premium hosted embeddings (Gemini)
-- Retrieval evaluated with LegalBench-RAG's own character-level metrics
-- Controlled ablations across chunking strategy and embedding model
-- With premium embeddings, **matches the published baseline** on PrivacyQA recall@8 (no reranker)
-- Separated, persistent indexing and query pipelines
-- Demonstrates: RAG construction, benchmark-faithful evaluation, controlled ablation, honest signal/noise interpretation
+| Stage | Options |
+|---|---|
+| Chunking | `naive` (fixed 500 chars) · `recursive` (split on paragraphs/lines/sentences, merge ≤ 500 chars) |
+| Embedding | `minilm` (all-MiniLM-L6-v2, local) · `bge` (bge-small-en-v1.5, local) · `gemini` (gemini-embedding-2, API) |
+| Retrieval | brute-force cosine top-k (NumPy) |
+| Generation | Gemini over retrieved chunks (demo, not evaluated) |
+| Metrics | character-level Recall@k · Precision@k · MRR (LegalBench-RAG method) |
 
-## Pipeline
-- **Ingestion** — load LegalBench-RAG corpus + benchmark JSON
-- **Chunking** — naive fixed-size (500 chars) **or** recursive character splitter + greedy merge
-- **Embedding** — local (`MiniLM-L6-v2`, `BGE-small-en-v1.5`, CPU) **or** hosted (`gemini-embedding-2`)
-- **Index** — persistent store (`embeddings.npy` + `chunks.json` + `index_meta.json`), built once, queried separately
-- **Retrieval** — brute-force cosine similarity (NumPy), top-k
-- **Generation** — hosted LLM over retrieved context with a grounded prompt *(demonstration layer; not yet evaluated)*
-- **Evaluation** — character-level Recall@k, Precision@k, MRR
+---
 
-## Metrics
-- **Recall@k** — fraction of gold snippet characters covered by retrieved chunks
-- **Precision@k** — fraction of retrieved characters that are gold
-- **MRR** — rank of the first relevant chunk
-- Character-level scoring = LegalBench-RAG's deterministic methodology
+## Setup
+
+Requirements: Python 3.10+, a few GB of disk (PyTorch). GPU not needed.
+
+```bash
+git clone git@github.com:mhajjilaamo/RAG_system.git
+cd RAG_system
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+Optional — Gemini (embeddings and answer generation only):
+
+```bash
+cp .env.example .env        # then set GEMINI_API_KEY=<your key>
+```
+
+Data: corpus + benchmarks are in `data/legalBench-RAG/` (194-question `*_mini.json` subsets included).
+Local models download from Hugging Face on first use.
+
+> Run every command from the repo root.
+
+---
+
+## Run
+
+| Task | Command |
+|---|---|
+| Web app | `streamlit run app.py` → http://localhost:8501 |
+| Build an index | `python -m scripts.build_index --corpus privacy_qa --chunking-strategy naive --embedding-model minilm` |
+| Evaluate an index | `python -m scripts.evaluate indexes/privacy_qa/<timestamp> --k 3` |
+| Rebuild mini benchmarks | `python -m scripts.make_mini_benchmark` |
+
+`build_index` flags (default: `config/config.yml`):
+- `--corpus` `contractnli` · `cuad` · `maud` · `privacy_qa`
+- `--chunking-strategy` `naive` · `recursive`
+- `--embedding-model` `minilm` · `bge` · `gemini`
+
+`evaluate` flags: `--k N` · `--max-questions N` · `--full` (full benchmark, not mini) · `--verbose`
+
+Outputs:
+- indexes → `indexes/<corpus>/<timestamp>/` (`chunks.json`, `embeddings.npy`, `index_meta.json`)
+- eval runs → `results/<corpus>/run_<corpus>_<timestamp>.json`
+
+---
+
+## Use the app
+
+1. **Sidebar** — pick corpus, embedding models, chunking strategies, `k`.
+   Every selected model × chunking combo that has an index is compared side by side.
+2. **Question** — choose a benchmark question (gold answer shown, metrics computed) or type your own.
+3. **Ask** — see:
+   - comparison table: retrieval time, cosine scores, recall / precision / RR, gold hits
+   - ranked chunks per configuration (✅ = overlaps gold answer)
+4. **Generate answer** toggle — Gemini answer per configuration (needs `.env`; 60 s timeout).
+5. **Build an index** (sidebar) — create a new local index (MiniLM / BGE) in one click.
+6. **Benchmark runs** tab — saved evaluation results for the corpus.
+
+Notes:
+- Cosine scores are not comparable across models.
+- Gemini indexes: build from CLI (free tier pauses 60 s per 100 chunks).
+
+---
 
 ## Results
-Subset: LegalBench-RAG-mini · 194 questions/corpus.
 
-**Chunking ablation** · `MiniLM-L6-v2` (local) · k=3
+LegalBench-RAG mini · 194 questions/corpus.
+
+**Chunking** · MiniLM · k=3
 
 | Corpus | Chunking | Recall | Precision | MRR |
 |---|---|---|---|---|
@@ -40,70 +91,56 @@ Subset: LegalBench-RAG-mini · 194 questions/corpus.
 | PrivacyQA | naive | 0.124 | 0.073 | 0.205 |
 | PrivacyQA | recursive | 0.120 | **0.086** | **0.227** |
 
-**Embedding-model ablation** · PrivacyQA · recursive · k=3
+**Embedding model** · PrivacyQA · recursive · k=3
 
 | Model | Recall | Precision | MRR |
 |---|---|---|---|
-| MiniLM-L6-v2 (local) | 0.120 | 0.086 | 0.227 |
-| BGE-small-en-v1.5 (local) | 0.120 | 0.070 | 0.182 |
-| gemini-embedding-2 (hosted) | **0.264** | **0.180** | **0.441** |
+| MiniLM | 0.120 | 0.086 | 0.227 |
+| BGE-small | 0.120 | 0.070 | 0.182 |
+| gemini-embedding-2 | **0.264** | **0.180** | **0.441** |
 
-**vs. published baseline** · PrivacyQA · recursive · no reranker · k=8
+**vs. paper** · PrivacyQA · recursive · no reranker · k=8
 
 | Setup | Recall | Precision |
 |---|---|---|
-| This project (`gemini-embedding-2`) | 0.414 | 0.118 |
-| Paper (OpenAI `text-embedding-3-large`) | 0.424 | 0.090 |
+| This project (gemini-embedding-2) | 0.414 | 0.118 |
+| Paper (text-embedding-3-large) | 0.424 | 0.090 |
 
-## Findings
-- **Embedding model is the dominant lever:** local/free ≈ 0.12 recall@3; premium (Gemini) ≈ 0.26 — roughly 2×
-- With premium embeddings, retrieval **matches the paper's reference baseline** on PrivacyQA recall@8 (0.414 vs 0.424, no reranker); precision is higher (0.118 vs 0.090), consistent with using smaller chunks
-- Recursive chunking improved ContractNLI (structured contracts); PrivacyQA within noise
-- BGE-small did not beat MiniLM at this scale — differences within noise
-- N=194: differences under ~0.04 are within noise — reported as such, not over-read
+Findings:
+- Embedding model = main lever: Gemini ≈ 2× local recall@3.
+- Gemini matches the paper's PrivacyQA recall@8 baseline; higher precision (smaller chunks).
+- Recursive chunking helps ContractNLI; PrivacyQA within noise.
+- N=194 → differences < ~0.04 are noise.
 
-## Limitations
-- `gemini-embedding-2` and generation use **hosted APIs** (not free/local in that configuration)
-- Generation is a demonstration layer — **not yet evaluated** (faithfulness/relevance)
-- Gemini embedding run on PrivacyQA only so far
-- Simplified recursive splitter (flatten-then-merge, no overlap); not LangChain's RCTS
-- Chunk size (500 chars) differs from the paper's unstated RCTS size — precision not directly comparable
-- Brute-force retrieval (fine at this scale, not production)
-- Evaluation subset: mini, 194 Q/corpus, ≤2 of 4 corpora
+Limitations:
+- Gemini = hosted API; generation not evaluated.
+- Gemini embeddings tested on PrivacyQA only.
+- Simplified recursive splitter, no overlap; 500-char chunks ≠ paper's chunk size.
+- Brute-force retrieval; mini subset, 2 of 4 corpora evaluated.
 
-## Stack
-`Python` · `sentence-transformers` · `google-genai` · `NumPy` · `pandas`
+---
 
 ## Structure
+
 ```
-app.py                     Streamlit UI: ask, compare models side by side
-config/config.yml          index build config (corpus, chunking, embedding model, k)
-src/                       library
+app.py                     Streamlit UI
+config/config.yml          default index config
+src/
   data_ingesting.py        corpus file listing
   chunking.py              naive + recursive chunkers
-  embedding.py             embedders (MiniLM / BGE local, Gemini hosted)
-  retrieval.py             cosine top-k (NumPy)
-  pipeline.py              build_index() + Index (load once, query many)
-  generate_answer.py       grounded generation over retrieved chunks
-  eval_metrics.py          character-level Recall / Precision / MRR
-scripts/                   entry points (run from repo root with `python -m`)
-  build_index.py           build an index from the config
-  evaluate.py              evaluate a saved index on a benchmark
-  make_mini_benchmark.py   sample the 194-question *_mini.json subsets
-data/legalBench-RAG/       corpus + benchmarks
-indexes/<corpus>/<ts>/     chunks.json, embeddings.npy, index_meta.json
-results/<corpus>/          evaluation runs (JSON)
+  embedding.py             MiniLM / BGE / Gemini embedders
+  retrieval.py             cosine top-k
+  pipeline.py              build_index() · Index (load once, query many)
+  generate_answer.py       Gemini answer over chunks
+  eval_metrics.py          Recall / Precision / MRR
+scripts/                   build_index · evaluate · make_mini_benchmark
+data/legalBench-RAG/       corpus/ · benchmarks/
+indexes/<corpus>/<ts>/     saved indexes
+results/<corpus>/          evaluation runs
 ```
 
-## Usage
-```bash
-pip install -r requirements.txt
-cp .env.example .env                    # add GEMINI_API_KEY (only for gemini / generation)
-python -m scripts.build_index --corpus privacy_qa --embedding-model minilm
-python -m scripts.evaluate indexes/privacy_qa/<timestamp> --k 3
-streamlit run app.py                    # interactive: ask a question, compare models
-```
+---
 
 ## Reference
-Pipitone & Houir Alami (2024), *LegalBench-RAG: A Benchmark for Retrieval-Augmented Generation in the Legal Domain*. [arXiv:2408.10343](https://arxiv.org/abs/2408.10343)
 
+Pipitone & Houir Alami (2024), *LegalBench-RAG: A Benchmark for Retrieval-Augmented Generation in the Legal Domain*. [arXiv:2408.10343](https://arxiv.org/abs/2408.10343)
