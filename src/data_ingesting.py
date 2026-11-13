@@ -9,7 +9,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class data:
+class CorpusFile:
     path_to_corpus: str #path
     file: str   #path
     corpus: str 
@@ -19,7 +19,7 @@ def import_data_legalBench_RAG_corpus(corpus):
     text_data = []
     corpus_dir = "data/legalBench-RAG/corpus/" + corpus   # the folder to READ from
     for file in os.listdir(corpus_dir):
-        text_data.append(data(
+        text_data.append(CorpusFile(
             path_to_corpus="data/legalBench-RAG/corpus/",  # for building read path
             file=corpus + "/" + file,                      # matches benchmark file_path
             corpus=corpus,

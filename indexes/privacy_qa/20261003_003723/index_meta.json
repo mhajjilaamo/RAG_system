@@ -1,0 +1,15 @@
+{
+    "corpus": "privacy_qa",
+    "chunking_strategy": "recursive",
+    "embedding_model": "gemini",
+    "k": 3,
+    "n_chunks": 433,
+    "timestamp": "20261003_003723",
+    "legacy_meta": {
+        "Timestamp": "20261003_003723",
+        "Corpus": "privacy_qa",
+        "Chunking strategy": "recursive chunker",
+        "Number of chunks": 433,
+        "embedding model": "gemini-embedding-001"
+    }
+}
