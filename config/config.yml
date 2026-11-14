@@ -1,0 +1,5 @@
+# config.yaml
+corpus: contractnli
+chunking_strategy: recursive
+embedding_model: gemini
+k: 3

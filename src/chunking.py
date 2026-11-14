@@ -1,12 +1,9 @@
-""" This file implements the following chunking strategy :
+"""
+Chunking strategies. Each chunker takes (article_text, source_path) and returns a list of
+Chunk whose text == article[start_index : start_index + length] (required by the char-level metrics).
 
-< Fixed size chunking > - naive chunking 
-
-v2 : add overlap
-
-input : 
-output : chunks
-
+- fixed_size_chunker : naive fixed-size windows (500 chars, no overlap)
+- recursive_chunker  : recursive split on separators, then greedy merge up to 500 chars
 """
 from dataclasses import dataclass
 
@@ -20,7 +17,6 @@ class Chunk:
     
     
 
-# Function that takes text and produces an array of 500 character chunks
 def fixed_size_chunker(article, source_path, chunk_size = 500):
     chunks = []
     # Iterate over characters
@@ -83,16 +79,6 @@ def merge_pieces(pieces, article, source_path, max_chunk_size):
 
 
 def recursive_chunker(article, source_path, max_chunk_size=500,
-                      separators=["\n\n", "\n", ".", " ", ""]):
+                      separators=("\n\n", "\n", ".", " ", "")):
     pieces = recursive_split(article, 0, separators, max_chunk_size)
     return merge_pieces(pieces, article, source_path, max_chunk_size)
-
-# with open("data/legalBench-RAG/corpus/privacy_qa/23andMe.txt", 'r', encoding='utf-8') as file:
-#     article = file.read()
-#     chunks = recursive_chunker(article, "privacy_qa/23andMe.txt")
-#     #print(chunks)
-#     for chunk in chunks:
-#         print("text :", chunk.text)
-#         print("length :", chunk.length)
-#         print("start index :", chunk.start_index)
-#         print("\n")

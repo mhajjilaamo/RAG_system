@@ -1,0 +1,8 @@
+{
+    "corpus": "privacy_qa",
+    "chunking_strategy": "naive",
+    "embedding_model": "minilm",
+    "k": 3,
+    "n_chunks": 357,
+    "timestamp": "20261113_163230"
+}

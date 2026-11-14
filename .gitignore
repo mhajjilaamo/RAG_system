@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual env
+rag_env/
+.venv/
+
+# Secrets
+.env
+*.env
+!.env.example
+
+# Editor
+*.code-workspace
+.vscode/
+
+# Claude Code (local only)
+CLAUDE.md
+.claude/
